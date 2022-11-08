@@ -5,11 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Entrega: CLIENTE</title>
+        <title>Entrega: CLIENTES</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="./css/styles.css" rel="stylesheet" />
     </head>
@@ -23,7 +24,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <button type="button" class="btn btn-danger" id="btnlogout">
                             Cerrar Sesion
-                        </button>                    
+                        </button>                 
                     </ul>
                     <form class="d-flex">
 
@@ -37,17 +38,32 @@
                 </div>
             </div>
         </nav>
+
         <!-- Header-->
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                    <h1 class="display-4 fw-bolder">TIENDA ONLILNE</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Proyecto final Coder House</p>
                 </div>
             </div>
         </header>
 
-        <!-- Section-->
+        <hr>
+
+        <!-- Buscador -->
+        <div class="container">
+            <div class="input-group">
+                <input class="form-control border-end-0 border rounded-pill" type="text" value="Buscar... (Palabras claves: Producto / Servicio" id="buscador">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button" id="btnbuscador">
+                        Buscar
+                    </button>
+                </span>
+         </div>
+        </div>
+
+        <!-- Section PRODUCTOS-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="cont-productos">
@@ -55,21 +71,24 @@
                 </div>
             </div>
         </section>
+
+
+        <!-- Section BUSQUEDA -->
+        <!-- <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <h5>Tu busqueda...</h5>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="cont-busqueda">
+                    
+                </div>
+            </div>
+        </section> -->
+
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; TIENDA ONLINE 2022</p></div>
         </footer>
+        
         <!-- Bootstrap core JS-->
-
-
-
-        <!-- Modal -->
-        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" id="carrito-contenedor">
-                
-            </div>
-        </div> -->
-
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -90,9 +109,11 @@
             </div>
           </div>
 
-
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="./js/system.js"></script>
         <script src="./js/tienda.js"></script>
         <script src="./js/check.js"></script>

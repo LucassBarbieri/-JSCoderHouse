@@ -2,121 +2,64 @@
 // -- PROYECTO: TIENDA ONLINE -----------------------------------------------------//
 // -- ALUMNO: Lucas Barbieri ------------------------------------------------------//
 // --------------------------------------------------------------------------------//
+window.onload = function () { 
+
+    contenedorProductos.innerHTML = ""
+
+    let productosAll = fetch('./js/productos.json')
+        .then((productosAll) => productosAll.json()).then((array) => {
+
+            array.forEach(producto => {
+
+                const div = document.createElement('div')
+                div.className = 'col mb-5'
+
+                div.innerHTML = `
+            <div class="card h-100">
+            <img class="card-img-top" src=${producto.img} alt="..." />
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <h5 class="fw-bolder">${producto.titulo}</h5>
+                    $ ${producto.precio}
+                </div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><button class="btn btn-outline-dark mt-auto" id="agregar${producto.id}">Agregar al carrito</button></div>
+            </div>
+            </div>
+            `
+                contenedorProductos.appendChild(div)
+
+                const boton = document.getElementById(`agregar${producto.id}`)
+
+                boton.addEventListener('click', () => {
+                    agregarCarrito(producto.id)
+                })
+
+            });
+        })
+
+}
+
 const carrito = []
-// --------------------------------------------------------------------------------//
+
 document.addEventListener('DOMContentloaded', () => {
 
-    if(localStorage.getItem('carrito')){
+    if (localStorage.getItem('carrito')) {
         carrito = JSON.parse(localStorage.getItem('carrito'))
         actualizarCarrito()
     }
 
 })
-// --------------------------------------------------------------------------------//
-const productos = [{
-    id: 1,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 1',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 2,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 2',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 3,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 3',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 4,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 4',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 5,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 4',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 6,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 5',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 7,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 6',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 8,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 7',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 9,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 8',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 10,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 9',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 11,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 10',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}, {
-    id: 12,
-    img: './img/imagen.png',
-    titulo: 'Diseño web 11',
-    descripcion: 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ',
-    precio: '3000',
-    stock: 4,
-    cantidad: '1'
-}]
-// --------------------------------------------------------------------------------//
-const contenedorProductos = document.getElementById('cont-productos')
+
+// const contenedorBusqueda = document.getElementById('cont-busqueda') 
+const contenedorProductos = document.getElementById('cont-productos') 
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const btnvaciarCarrito = document.getElementById('vaciar-carrito')
 const contadorCarrito = document.getElementById('contador-carrito')
 const precioTotal = document.getElementById('preciototal')
-// --------------------------------------------------------------------------------//
+const btnbuscador = document.getElementById('btnbuscador')
+
 btnvaciarCarrito.addEventListener('click', () => {
     carrito.length = 0
     actualizarCarrito()
@@ -131,48 +74,19 @@ btnvaciarCarrito.addEventListener('click', () => {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    
+
     Toast.fire({
         icon: 'success',
         title: 'Vaciaste el carrito!'
     })
 })
- // --------------------------------------------------------------------------------//
-productos.forEach(producto => {
 
-    const div = document.createElement('div')
-    div.className = 'col mb-5'
-
-    div.innerHTML = `
-    <div class="card h-100">
-    <img class="card-img-top" src=${producto.img} alt="..." />
-    <div class="card-body p-4">
-        <div class="text-center">
-            <h5 class="fw-bolder">${producto.titulo}</h5>
-            $ ${producto.precio}
-        </div>
-    </div>
-    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-        <div class="text-center"><button class="btn btn-outline-dark mt-auto" id="agregar${producto.id}">Agregar al carrito</button></div>
-    </div>
-    </div>
-    `
-    contenedorProductos.appendChild(div)
-
-    const boton = document.getElementById(`agregar${producto.id}`)
-
-    boton.addEventListener('click', () => {
-        agregarCarrito(producto.id)
-    })
-
-});
-// --------------------------------------------------------------------------------//
 const agregarCarrito = (prodId) => {
     const existe = carrito.some(prod => prod.id === prodId)
 
-    if(existe){
-        const prod = carrito.map (prod => {
-            if(prod.id == prodId){
+    if (existe) {
+        const prod = carrito.map(prod => {
+            if (prod.id == prodId) {
                 prod.cantidad++
             }
             Swal.fire({
@@ -187,7 +101,7 @@ const agregarCarrito = (prodId) => {
                 // timer: 2500
             })
         })
-    }else{
+    } else {
         let item = productos.find((prod) => prod.id === prodId)
         carrito.push(item)
 
@@ -202,19 +116,17 @@ const agregarCarrito = (prodId) => {
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-        
+
         Toast.fire({
             icon: 'success',
             title: 'Producto agregado!'
         })
     }
-    
 
     actualizarCarrito()
 }
-// --------------------------------------------------------------------------------//
-const eliminarDelCarrito = (prodId) => {
 
+const eliminarDelCarrito = (prodId) => {
     const item = carrito.find((prod) => prod.id === prodId)
     const indice = carrito.indexOf(item)
 
@@ -232,20 +144,18 @@ const eliminarDelCarrito = (prodId) => {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    
+
     Toast.fire({
         icon: 'success',
         title: 'Producto eliminado!'
     })
 
 }
-// --------------------------------------------------------------------------------//
+
 function actualizarCarrito() {
-
     contenedorCarrito.innerHTML = ""
-
     carrito.forEach((producto) => {
-    
+
         const div = document.createElement('div')
         div.className = 'col mb-5'
         div.innerHTML = `
@@ -266,51 +176,70 @@ function actualizarCarrito() {
         `
         contenedorCarrito.appendChild(div)
         localStorage.setItem('carrito', JSON.stringify(carrito))
-        
+
     })
 
     contadorCarrito.innerText = carrito.length
-    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.precio, 0) 
+    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.precio, 0)
     localStorage.setItem('carrito', JSON.stringify(carrito))
 
+}
+
+function buscador(array) {
+    let buscador = document.getElementById('buscador').value;
+
+    if (!buscador) {
+        return array
+    } else {
+        return array.filter(producto => producto.categoria.toLowerCase() === buscador.toLowerCase())
+    }
 
 }
-// --------------------------------------------------------------------------------//
-// function agregarProducto(){
 
-//     alert("Ingresa el producto deseado")
-//     let agregarTitulos = prompt("Ingrese el titulo:")
-//     let agregarDetalle = prompt("Ingrese el detalle:")
-//     let agregarStock =  parseInt(prompt("Ingrese la cantidad de stock:"))
-//     let agregarPrecio = parseInt(prompt("Ingrese el precio:"))
-//     let productoAgregado = new Productos(deposito.length+1,agregarTitulos, agregarDetalle, agregarStock, agregarPrecio)
-//     deposito.push(productoAgregado)
+async function bringData() {
+    const response = await fetch('./js/productos.json');
+    const data = await response.json();
 
-// }
-// --------------------------------------------------------------------------------//
-// function eliminarProducto(){
+    crearHTML(buscador(data))
+}
 
-//     alert("Estas por eliminar un producto!")
-//     let idEliminar = prompt("Ingrese la id del producto a eliminar:")
-//     for(let libroBuscado of deposito){
-//         if (libroBuscado.id == idEliminar){
-//             alert("Este es el producto " + libroBuscado.titulo)
-//             deposito.splice(idEliminar-1, 1)
-//         }
-//     }
-    
-// }
-// --------------------------------------------------------------------------------//
+function crearHTML(array) {
+    contenedorProductos.innerHTML = ""
+
+    array.forEach(producto => {
+
+        const div = document.createElement('div')
+        div.className = 'col mb-5'
+
+        div.innerHTML = `
+        <div class="card h-100">
+        <img class="card-img-top" src=${producto.img} alt="..." />
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder">${producto.titulo}</h5>
+                $ ${producto.precio}
+            </div>
+        </div>
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><button class="btn btn-outline-dark mt-auto" id="agregar${producto.id}">Agregar al carrito</button></div>
+        </div>
+        </div>
+        `
+        contenedorProductos.appendChild(div)
+
+        const boton = document.getElementById(`agregar${producto.id}`)
+
+        boton.addEventListener('click', () => {
+            agregarCarrito(producto.id)
+        })
+
+    });
+
+}
+btnbuscador.addEventListener('click', () => {
+    bringData()
+})
+
 const btnCerrarr = document.getElementById('btnlogout')
 btnCerrarr.addEventListener('click', logout)
-// --------------------------------------------------------------------------------//
-// -- LOGICA ----------------------------------------------------------------------//
-
-// --------------------------------------------------------------------------------//
-// -- COMENTARIOS -----------------------------------------------------------------//
-// sessionStorage.clear();              // Limpia el carrito
-// e.preventDefault();                  // No recarga la pagina
-// ------------------------------- COPYRIGHT --------------------------------------//
-// -------------------------------- FINGER ----------------------------------------//
-// --------------------------------- 2020 -----------------------------------------//
 // --------------------------------------------------------------------------------//

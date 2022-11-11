@@ -23,7 +23,7 @@ function obtenerListaUser(){
     return listaUsuarios;
 
 }
-
+// --------------------------------------------------------------------------------//
 function validarCredenciales (pUsuario, pPassword){
 
     let listaUsuarios = obtenerListaUser()
@@ -47,7 +47,7 @@ function validarCredenciales (pUsuario, pPassword){
     return bAcceso;
 
 }
-
+// --------------------------------------------------------------------------------//
 function iniciarSession(){
 
     let sUsuario = "";
@@ -92,7 +92,15 @@ function iniciarSession(){
            
     }
 }
-
+// --------------------------------------------------------------------------------//
+// function recordarUser(){
+//     if(recordarUser.checked){
+//         // LOCAL SI ESTA CHEQUEADO
+//     }else{
+//         // SESSION SI NO ESTA CHEQUEADO
+//     }
+// }
+// --------------------------------------------------------------------------------//
 const btnIngresar = document.getElementById('btnLogin')
 const alertContenedor = document.getElementById('alerta-cont')
 

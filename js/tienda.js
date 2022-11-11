@@ -2,11 +2,11 @@
 // -- PROYECTO: TIENDA ONLINE -----------------------------------------------------//
 // -- ALUMNO: Lucas Barbieri ------------------------------------------------------//
 // --------------------------------------------------------------------------------//
-window.onload = function () { 
+window.onload = function () {
 
     contenedorProductos.innerHTML = ""
 
-    let productosAll = fetch('./js/productos.json')
+    const productosAll = fetch('./js/productos.json')
         .then((productosAll) => productosAll.json()).then((array) => {
 
             array.forEach(producto => {
@@ -15,18 +15,18 @@ window.onload = function () {
                 div.className = 'col mb-5'
 
                 div.innerHTML = `
-            <div class="card h-100">
-            <img class="card-img-top" src=${producto.img} alt="..." />
-            <div class="card-body p-4">
-                <div class="text-center">
-                    <h5 class="fw-bolder">${producto.titulo}</h5>
-                    $ ${producto.precio}
+                <div class="card h-100">
+                <img class="card-img-top" src=${producto.img} alt="..." />
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h5 class="fw-bolder">${producto.titulo}</h5>
+                        $ ${producto.precio}
+                    </div>
                 </div>
-            </div>
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center"><button class="btn btn-outline-dark mt-auto" id="agregar${producto.id}">Agregar al carrito</button></div>
-            </div>
-            </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><button class="btn btn-outline-dark mt-auto" id="agregar${producto.id}">Agregar al carrito</button></div>
+                </div>
+                </div>
             `
                 contenedorProductos.appendChild(div)
 
@@ -37,29 +37,30 @@ window.onload = function () {
                 })
 
             });
+
+
         })
 
 }
-
+// --------------------------------------------------------------------------------//
 const carrito = []
-
+// --------------------------------------------------------------------------------//
 document.addEventListener('DOMContentloaded', () => {
-
     if (localStorage.getItem('carrito')) {
         carrito = JSON.parse(localStorage.getItem('carrito'))
         actualizarCarrito()
     }
 
 })
-
-// const contenedorBusqueda = document.getElementById('cont-busqueda') 
-const contenedorProductos = document.getElementById('cont-productos') 
+// --------------------------------------------------------------------------------//
+const contenedorProductos = document.getElementById('cont-productos')
+const contenedorBusqueda = document.getElementById('cont-busqueda')
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const btnvaciarCarrito = document.getElementById('vaciar-carrito')
 const contadorCarrito = document.getElementById('contador-carrito')
 const precioTotal = document.getElementById('preciototal')
 const btnbuscador = document.getElementById('btnbuscador')
-
+// --------------------------------------------------------------------------------//
 btnvaciarCarrito.addEventListener('click', () => {
     carrito.length = 0
     actualizarCarrito()
@@ -80,7 +81,7 @@ btnvaciarCarrito.addEventListener('click', () => {
         title: 'Vaciaste el carrito!'
     })
 })
-
+// --------------------------------------------------------------------------------//
 const agregarCarrito = (prodId) => {
     const existe = carrito.some(prod => prod.id === prodId)
 
@@ -102,8 +103,14 @@ const agregarCarrito = (prodId) => {
             })
         })
     } else {
-        let item = productos.find((prod) => prod.id === prodId)
-        carrito.push(item)
+        const array = fetch('./js/productos.json')
+        .then((array) => array.json()).then((array) => {
+
+            let item = array.find((array) => array.id === prodId)
+
+            carrito.push(item)
+                actualizarCarrito()
+        })
 
         const Toast = Swal.mixin({
             toast: true,
@@ -125,8 +132,9 @@ const agregarCarrito = (prodId) => {
 
     actualizarCarrito()
 }
-
+// --------------------------------------------------------------------------------//
 const eliminarDelCarrito = (prodId) => {
+
     const item = carrito.find((prod) => prod.id === prodId)
     const indice = carrito.indexOf(item)
 
@@ -151,9 +159,11 @@ const eliminarDelCarrito = (prodId) => {
     })
 
 }
-
+// --------------------------------------------------------------------------------//
 function actualizarCarrito() {
+
     contenedorCarrito.innerHTML = ""
+
     carrito.forEach((producto) => {
 
         const div = document.createElement('div')
@@ -183,8 +193,9 @@ function actualizarCarrito() {
     precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.precio, 0)
     localStorage.setItem('carrito', JSON.stringify(carrito))
 
-}
 
+}
+// --------------------------------------------------------------------------------//
 function buscador(array) {
     let buscador = document.getElementById('buscador').value;
 
@@ -195,14 +206,14 @@ function buscador(array) {
     }
 
 }
-
+// --------------------------------------------------------------------------------//
 async function bringData() {
     const response = await fetch('./js/productos.json');
     const data = await response.json();
 
     crearHTML(buscador(data))
 }
-
+// --------------------------------------------------------------------------------//
 function crearHTML(array) {
     contenedorProductos.innerHTML = ""
 
@@ -236,10 +247,11 @@ function crearHTML(array) {
     });
 
 }
+// --------------------------------------------------------------------------------//
 btnbuscador.addEventListener('click', () => {
     bringData()
 })
-
+// --------------------------------------------------------------------------------//
 const btnCerrarr = document.getElementById('btnlogout')
 btnCerrarr.addEventListener('click', logout)
 // --------------------------------------------------------------------------------//
